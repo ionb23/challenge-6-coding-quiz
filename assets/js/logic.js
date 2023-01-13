@@ -1,6 +1,11 @@
 // Selects element by class
 var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
+var startScreen = document.querySelector("#start-screen");
+var questionsEl = document.querySelector("#questions");
+var choicesEl = document.querySelector("#choices");
+
+
 var secondsLeft = 75;
 
 function startTimer() {
@@ -28,6 +33,11 @@ function highscoresPage() {
 startQuiz.addEventListener("click", function() {
     // Executes function that starts the timer
     startTimer();
+    // hides start-screen class
+    startScreen.textContent = "";
     // Executes function to start showing questions
-
   });
+
+  function showQuestions() {
+    
+  }
