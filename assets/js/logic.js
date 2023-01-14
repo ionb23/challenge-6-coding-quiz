@@ -2,42 +2,88 @@
 var startQuiz = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
 var startScreen = document.querySelector("#start-screen");
-var questionsEl = document.querySelector("#questions");
+var questionsBox = document.querySelector("#questions");
+var questionsEl = document.querySelector("#question-title");
 var choicesEl = document.querySelector("#choices");
 
+// Defines how many seconds the student has to complete quiz
+var secondsLeft = 750;
 
-var secondsLeft = 75;
-
+// Creating function that starts the timer
 function startTimer() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft;
+    // Sets interval in variable
+    var timerInterval = setInterval(function () {
+        // Removes one second from the timer for each second passed
+        secondsLeft--;
+        timeEl.textContent = secondsLeft;
 
-    if(secondsLeft === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function move user to the highscores page
-      highscoresPage();
-    }
+        if (secondsLeft === 0) {
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
+            // Calls function move user to the highscores page
+            highscoresPage();
+        }
 
-  }, 5);
+    }, 1000);
 }
 
-// Function to create and append colorsplosion image
+// Function to move user to highscores page once timer runs out
 function highscoresPage() {
-  timeEl.textContent = " ";
-  window.location.href = "highscores.html";;
+    timeEl.textContent = " ";
+    window.location.href = "highscores.html";;
 }
 
-startQuiz.addEventListener("click", function() {
+// Function to start the quiz if the "Start Quiz" button is clicked
+startQuiz.addEventListener("click", function () {
     // Executes function that starts the timer
     startTimer();
     // hides start-screen class
     startScreen.textContent = "";
     // Executes function to start showing questions
-  });
+    showQuestions();
+});
 
-  function showQuestions() {
-    
-  }
+function showQuestions() {
+    // Removes the "hide" class attritube from the questions div
+    // Sets the class attrribute to "show" and sets display to "block"
+    questionsBox.setAttribute("class", "show");
+    questionsBox.style.display = "block";
+
+    // Shows student the first question and answer options
+    questionsEl.textContent = questions.question1.question;
+
+    // Creates ol (ordered list) element where we later store the 4 choices
+    var choicesList = document.createElement('ol');
+    choicesList.setAttribute("class", "ol")
+    choicesEl.appendChild(choicesList);
+
+    // Creates loop to convert choices array to list items
+    for (var i = 0; i < questions.question1.choices.length; i++) {
+        // Loops over the choices array, creating an li element for each index of the array
+        var choicesOption = document.createElement('li');
+        choicesOption.setAttribute("class", "li")
+
+        // Sets the content of the created li element to the value of the current array index.
+        choicesOption.textContent = questions.question1.choices[i];
+        // Finally, the new li should be appended to the ol provided.
+        choicesList.appendChild(choicesOption);
+    }
+}
+
+
+
+
+// questionsEl.getAttribute("class");
+// 'hide'
+// questionsEl.setAttribute("class", "show");
+// undefined
+// questionsEl.getAttribute("class");
+// 'show'
+// startScreen.textContent = "";
+// ''
+//  questionsEl.style.display="block"
+// 'block'
+//  questionsEl.style.display="block";
+// 'block'
+// questionsEl.getAttribute("style");
+// 'display: 
