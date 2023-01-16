@@ -73,44 +73,23 @@ function showQuestions() {
         choicesButton.textContent = questions[0].choices[i];
         // Sets id to each button according to the index in the array, so we can track which button is clicked
         choicesButton.setAttribute("id", i)
+        choicesButton.setAttribute("onClick", "buttonClick(this.id)")
 
         // The newly created li is appended to the ol provided
         choicesOption.appendChild(choicesButton);
     }
 }
 
-function checkAnswer() {
-    asd
+function buttonClick(clicked) {
+    // gets the id of the button clicked and records its text contect
+    var choiceSelected = document.getElementById(clicked).textContent;
+    console.log(choiceSelected);
+    if (choiceSelected == questions[0].correctAnswer) {
+        console.log("CORRECT!!!");
+        // add 1 to the score if answer is correct then moves to the next question
+        score++;
+
+    } else console.log("WRONG!!!");
+    // subtracts 15 seconds if answer is incorrect then moves to the next question
+    secondsLeft = secondsLeft - 15;
 }
-
-
-    // // Creates loop to convert choices array to list items
-    // for (var i = 0; i < questions.question1.choices.length; i++) {
-    //     // Loops over the choices array, creating an li element for each index of the array
-    //     var choicesOption = document.createElement('li');
-    //     choicesOption.setAttribute("class", "li")
-
-    //     // Sets the content of the created li element to the value of the current array index.
-    //     choicesOption.textContent = questions.question1.choices[i];
-    //     // Finally, the new li should be appended to the ol provided.
-    //     choicesList.appendChild(choicesOption);
-    // }
-
-
-
-
-
-// questionsEl.getAttribute("class");
-// 'hide'
-// questionsEl.setAttribute("class", "show");
-// undefined
-// questionsEl.getAttribute("class");
-// 'show'
-// startScreen.textContent = "";
-// ''
-//  questionsEl.style.display="block"
-// 'block'
-//  questionsEl.style.display="block";
-// 'block'
-// questionsEl.getAttribute("style");
-// 'display: 
