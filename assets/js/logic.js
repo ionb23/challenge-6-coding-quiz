@@ -5,6 +5,10 @@ var startScreen = document.querySelector("#start-screen");
 var questionsBox = document.querySelector("#questions");
 var questionsEl = document.querySelector("#question-title");
 var choicesEl = document.querySelector("#choices");
+var endScreen = document.querySelector("#end-screen");
+var submitButton = document.querySelector("#submit");
+var storedUserInitials = document.querySelector("#initials");
+
 var score = 0;
 var currentQuestion = 0;
 
@@ -22,17 +26,33 @@ function startTimer() {
         if (secondsLeft === 0 || currentQuestion >= questions.length) {
             // Stops execution of action at set interval
             clearInterval(timerInterval);
-            // Calls function move user to the highscores page
-            highscoresPage();
+            // Calls function to stop quiz, hide question element and show end screen element
+            endScreenPage();
         }
 
     }, 1000);
 }
 
-// Function to move user to highscores page once timer runs out
+function endScreenPage() {
+    timeEl.textContent = " ";
+    questionsBox.setAttribute("class", "hide");
+    endScreen.setAttribute("class", "show");
+    document.getElementById("final-score").textContent = score;
+}
+
+// Function to store entered initials and move user to the highscores page when submit button is clicked
+submitButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    storedObject = JSON.stringify(storedUserInitials.value);
+    localStorage.setItem("initials", storedObject);
+    localStorage.setItem("score", score);
+    highscoresPage();
+});
+
+// Function to move user to highscores page once timer or quesitons run out
 function highscoresPage() {
     timeEl.textContent = " ";
-    window.location.href = "highscores.html";;
+    window.location.href = "highscores.html";
 }
 
 // Function to start the quiz if the "Start Quiz" button is clicked
@@ -44,7 +64,6 @@ startQuiz.addEventListener("click", function () {
     // Removes the "hide" class attritube from the questions div
     // Sets the class attrribute to "show" and sets display to "block"
     questionsBox.setAttribute("class", "show");
-    questionsBox.style.display = "block";
     // Executes function to start showing questions
     createChoiceList();
     showQuestions();
@@ -82,7 +101,6 @@ function showQuestions() {
     document.getElementById("2").textContent = questions[currentQuestion].choices[2];
     document.getElementById("3").textContent = questions[currentQuestion].choices[3];
 }
-
 
 function buttonClick(clicked) {
     // gets the id of the button clicked and records its text contect
