@@ -1,23 +1,23 @@
 var questions = [
 	{
         question: 'What is W?',
-        choices: ['123', '456', '789', '999'],
-		correctAnswer: '123'
+        choices: ['W', '456', '789', '999'],
+		correctAnswer: 'W'
 	},
 	{
         question: 'What is X?',
-        choices: ['123', '456', '789', '999'],
-		correctAnswer: '123'
+        choices: ['asd', 'X', '789', '999'],
+		correctAnswer: 'X'
 	},
     {
         question: 'What is Y?',
-        choices: ['123', '456', '789', '999'],
-		correctAnswer: '123'
+        choices: ['123', '456', 'Y', '999'],
+		correctAnswer: 'Y'
 	},
     {
         question: 'What is Z?',
-        choices: ['123', '456', '789', '999'],
-		correctAnswer: '123'
+        choices: ['123', '456', '789', 'Z'],
+		correctAnswer: 'Z'
 	},
 ];
 

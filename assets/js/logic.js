@@ -6,6 +6,7 @@ var questionsBox = document.querySelector("#questions");
 var questionsEl = document.querySelector("#question-title");
 var choicesEl = document.querySelector("#choices");
 var score = 0;
+var currentQuestion = 0;
 
 // Defines how many seconds the student has to complete quiz
 var secondsLeft = 750;
@@ -18,7 +19,7 @@ function startTimer() {
         secondsLeft--;
         timeEl.textContent = secondsLeft;
 
-        if (secondsLeft === 0) {
+        if (secondsLeft === 0 || currentQuestion >= questions.length) {
             // Stops execution of action at set interval
             clearInterval(timerInterval);
             // Calls function move user to the highscores page
@@ -40,29 +41,21 @@ startQuiz.addEventListener("click", function () {
     startTimer();
     // hides start-screen class
     startScreen.textContent = "";
-    // Executes function to start showing questions
-    showQuestions();
-});
-
-function cycleQuestions() {
-    var questionShown = 1;
-}
-
-function showQuestions() {
     // Removes the "hide" class attritube from the questions div
     // Sets the class attrribute to "show" and sets display to "block"
     questionsBox.setAttribute("class", "show");
     questionsBox.style.display = "block";
+    // Executes function to start showing questions
+    createChoiceList();
+    showQuestions();
+});
 
-    // Shows student the first question and answer options
-    questionsEl.textContent = questions[0].question
-
+function createChoiceList() {
     // Creates ol (ordered list) element where we later store the 4 choices
     var choicesList = document.createElement('ol');
     choicesEl.appendChild(choicesList);
-
     // Creates loop to convert choices array to list items
-    for (var i = 0; i < questions[0].choices.length; i++) {
+    for (var i = 0; i < questions[currentQuestion].choices.length; i++) {
         // Loops over the choices array, creating an li element for each index of the choices array
         var choicesOption = document.createElement('li');
         // The newly created li is appended to the ol provided
@@ -70,7 +63,7 @@ function showQuestions() {
         // Loops again and creates a button for each index of the choices array
         var choicesButton = document.createElement('button');
         // Sets the content of the created button element to the value of the choices array index
-        choicesButton.textContent = questions[0].choices[i];
+        choicesButton.textContent = questions[currentQuestion].choices[i];
         // Sets id to each button according to the index in the array, so we can track which button is clicked
         choicesButton.setAttribute("id", i)
         choicesButton.setAttribute("onClick", "buttonClick(this.id)")
@@ -80,16 +73,30 @@ function showQuestions() {
     }
 }
 
+function showQuestions() {
+    // shows next question
+    questionsEl.textContent = questions[currentQuestion].question;
+    // shows next choices
+    document.getElementById("0").textContent = questions[currentQuestion].choices[0];
+    document.getElementById("1").textContent = questions[currentQuestion].choices[1];
+    document.getElementById("2").textContent = questions[currentQuestion].choices[2];
+    document.getElementById("3").textContent = questions[currentQuestion].choices[3];
+}
+
+
 function buttonClick(clicked) {
     // gets the id of the button clicked and records its text contect
     var choiceSelected = document.getElementById(clicked).textContent;
     console.log(choiceSelected);
-    if (choiceSelected == questions[0].correctAnswer) {
+    if (choiceSelected == questions[currentQuestion].correctAnswer) {
         console.log("CORRECT!!!");
         // add 1 to the score if answer is correct then moves to the next question
         score++;
-
+        currentQuestion++;
+        showQuestions();
     } else console.log("WRONG!!!");
     // subtracts 15 seconds if answer is incorrect then moves to the next question
     secondsLeft = secondsLeft - 15;
+    currentQuestion++;
+    showQuestions();
 }
