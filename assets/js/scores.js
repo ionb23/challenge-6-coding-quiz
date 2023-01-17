@@ -13,6 +13,6 @@ function showHighscores() {
 
 showHighscores();
 
-
 // on correct answer currentQuestion +2 instead of +1
 // how to save multiple highscores in local storage
+// remove quotation marks from recorded initials

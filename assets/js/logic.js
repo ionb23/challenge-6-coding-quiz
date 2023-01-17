@@ -43,9 +43,19 @@ function endScreenPage() {
 // Function to store entered initials and move user to the highscores page when submit button is clicked
 submitButton.addEventListener("click", function (event) {
     event.preventDefault();
-    storedObject = JSON.stringify(storedUserInitials.value);
-    localStorage.setItem("initials", storedObject);
-    localStorage.setItem("score", score);
+    storedObject = storedUserInitials.value;
+
+    var storedScore = JSON.parse(localStorage.getItem("score")) || [];
+
+    var userScore = {
+        initials: storedObject, 
+        score
+    }
+
+    storedScore.push(userScore);
+
+    // localStorage.setItem("initials", storedObject);
+    localStorage.setItem("score", JSON.stringify(storedScore));
     highscoresPage();
 });
 
@@ -112,9 +122,11 @@ function buttonClick(clicked) {
         score++;
         currentQuestion++;
         showQuestions();
-    } else console.log("WRONG!!!");
-    // subtracts 15 seconds if answer is incorrect then moves to the next question
-    secondsLeft = secondsLeft - 15;
-    currentQuestion++;
-    showQuestions();
+    } else {
+        console.log("WRONG!!!");
+        // subtracts 15 seconds if answer is incorrect then moves to the next question
+        secondsLeft = secondsLeft - 15;
+        currentQuestion++;
+        showQuestions();
+    }
 }
