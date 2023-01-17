@@ -1,18 +1,29 @@
 var highscoresList = document.querySelector("#highscores");
-var storedObject = localStorage.getItem("initials");
-var score = localStorage.getItem("score");
+// var storedObject = localStorage.getItem("initials");
+var score = JSON.parse(localStorage.getItem("score")) || [];
+
+// if (localStorage.getItem("score")){
+//     var score = JSON.parse(localStorage.getItem("score")) 
+// } else {
+//     var score =  [];
+// }
+
+var clearHighscores = document.querySelector("#clear");
 
 function showHighscores() {
-    // Creates new li for saved initals + score
-    var savedHighscore = document.createElement('li');
-    // The newly created li is appended to the ol provided
-    highscoresList.appendChild(savedHighscore);
-    // Sets the content of the newly created li to the saved initials and highscore
-    savedHighscore.textContent = (localStorage.getItem("initials", storedObject) + " - " + score);
+    for (var i = 0; i < score.length; i++) {
+        // Creates new li for saved initals + score
+        var savedHighscore = document.createElement('li');
+        // The newly created li is appended to the ol provided
+        highscoresList.appendChild(savedHighscore);
+        // Sets the content of the newly created li to the saved initials and highscore
+        savedHighscore.textContent = (score[i].initials + " - " + score[i].score);
+    }
 }
 
 showHighscores();
 
-// on correct answer currentQuestion +2 instead of +1
-// how to save multiple highscores in local storage
-// remove quotation marks from recorded initials
+clearHighscores.addEventListener("click", function () {
+    localStorage.clear();
+    window.location.reload();
+});
