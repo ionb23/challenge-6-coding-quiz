@@ -13,7 +13,7 @@ var score = 0;
 var currentQuestion = 0;
 
 // Defines how many seconds the student has to complete quiz
-var secondsLeft = 750;
+var secondsLeft = 60;
 
 // Creating function that starts the timer
 function startTimer() {
@@ -125,7 +125,7 @@ function buttonClick(clicked) {
     } else {
         console.log("WRONG!!!");
         // subtracts 15 seconds if answer is incorrect then moves to the next question
-        secondsLeft = secondsLeft - 15;
+        secondsLeft = secondsLeft - 10;
         currentQuestion++;
         showQuestions();
     }
